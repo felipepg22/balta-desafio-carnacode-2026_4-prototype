@@ -3,75 +3,13 @@
 // baseados em templates pré-configurados complexos (contratos, propostas, relatórios)
 // O código atual recria objetos do zero, perdendo muito tempo em inicializações
 
-using System;
-using System.Collections.Generic;
+using PrototypeDesignChallenge.Models;
 
 namespace PrototypeDesignChallenge
 {
     // Contexto: Sistema que gerencia documentos corporativos com muitas configurações
     // Templates são complexos e custosos para criar, mas precisamos gerar muitos documentos similares
     
-    public class DocumentTemplate
-    {
-        public string Title { get; set; }
-        public string Category { get; set; }
-        public List<Section> Sections { get; set; }
-        public DocumentStyle Style { get; set; }
-        public List<string> RequiredFields { get; set; }
-        public Dictionary<string, string> Metadata { get; set; }
-        public ApprovalWorkflow Workflow { get; set; }
-        public List<string> Tags { get; set; }
-
-        public DocumentTemplate()
-        {
-            Sections = new List<Section>();
-            RequiredFields = new List<string>();
-            Metadata = new Dictionary<string, string>();
-            Tags = new List<string>();
-        }
-    }
-
-    public class Section
-    {
-        public string Name { get; set; }
-        public string Content { get; set; }
-        public bool IsEditable { get; set; }
-        public List<string> Placeholders { get; set; }
-
-        public Section()
-        {
-            Placeholders = new List<string>();
-        }
-    }
-
-    public class DocumentStyle
-    {
-        public string FontFamily { get; set; }
-        public int FontSize { get; set; }
-        public string HeaderColor { get; set; }
-        public string LogoUrl { get; set; }
-        public Margins PageMargins { get; set; }
-    }
-
-    public class Margins
-    {
-        public int Top { get; set; }
-        public int Bottom { get; set; }
-        public int Left { get; set; }
-        public int Right { get; set; }
-    }
-
-    public class ApprovalWorkflow
-    {
-        public List<string> Approvers { get; set; }
-        public int RequiredApprovals { get; set; }
-        public int TimeoutDays { get; set; }
-
-        public ApprovalWorkflow()
-        {
-            Approvers = new List<string>();
-        }
-    }
 
     public class DocumentService
     {
