@@ -6,7 +6,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DesignPatternChallenge
+namespace PrototypeDesignChallenge
 {
     // Contexto: Sistema que gerencia documentos corporativos com muitas configurações
     // Templates são complexos e custosos para criar, mas precisamos gerar muitos documentos similares
