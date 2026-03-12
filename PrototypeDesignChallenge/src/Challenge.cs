@@ -3,6 +3,7 @@
 // baseados em templates pré-configurados complexos (contratos, propostas, relatórios)
 // O código atual recria objetos do zero, perdendo muito tempo em inicializações
 
+using PrototypeDesignChallenge.Builders;
 using PrototypeDesignChallenge.Models;
 
 namespace PrototypeDesignChallenge
@@ -14,8 +15,40 @@ namespace PrototypeDesignChallenge
     public class DocumentService
     {
         // Problema: Criação manual de templates complexos repetidamente
-        public DocumentTemplate CreateServiceContract()
+        public DocumentTemplate CreateServiceContract(DocumentTemplate? documentTemplate = null)
         {
+            string title = "Contrato de Prestação de Serviços";
+            
+            if (documentTemplate is not null)
+            {
+                DocumentTemplate clonedTemplate = (DocumentTemplate)documentTemplate.Clone();
+                clonedTemplate.Title = title;
+                
+                SectionBuilder sectionBuilder = new SectionBuilder();
+                
+                Section section1 = sectionBuilder.WithName("Cláusula 1 - Objeto")
+                                                 .WithContent("O presente contrato de consultoria tem por objeto...")
+                                                 .IsEditable()
+                                                 .Build();
+                
+                Section section2 = sectionBuilder.WithName("Cláusula 2 - Prazo")
+                                                 .WithContent("O prazo de vigência será de...")
+                                                 .IsEditable()
+                                                 .Build();
+                
+                Section section3 = sectionBuilder.WithName("Cláusula 3 - Valor")
+                                                 .WithContent("O valor total do contrato é de...")
+                                                 .IsEditable()
+                                                 .Build();
+                
+                clonedTemplate.Sections.Clear();                        
+                clonedTemplate.Sections.Add(section1);
+                clonedTemplate.Sections.Add(section2);
+                clonedTemplate.Sections.Add(section3);
+                
+                return clonedTemplate;
+            }
+            
             Console.WriteLine("Criando template de Contrato de Serviço do zero...");
             
             // Simulando processo custoso de inicialização
@@ -23,7 +56,7 @@ namespace PrototypeDesignChallenge
             
             var template = new DocumentTemplate
             {
-                Title = "Contrato de Prestação de Serviços",
+                Title = title,
                 Category = "Contratos",
                 Style = new DocumentStyle
                 {
@@ -77,8 +110,35 @@ namespace PrototypeDesignChallenge
         }
 
         // Problema: Mesmo código repetido para criar documentos similares
-        public DocumentTemplate CreateConsultingContract()
+        public DocumentTemplate CreateConsultingContract(DocumentTemplate? documentTemplate = null)
         {
+            string title = "Contrato de Consultoria";
+            
+            if (documentTemplate is not null)
+            {
+                DocumentTemplate clonedTemplate = (DocumentTemplate)documentTemplate.Clone();
+                clonedTemplate.Title = title;
+                
+                SectionBuilder sectionBuilder = new SectionBuilder();
+                
+                Section section1 = sectionBuilder.WithName("Cláusula 1 - Objeto")
+                                                 .WithContent("O presente contrato de consultoria tem por objeto...")
+                                                 .IsEditable()
+                                                 .Build();
+                
+                Section section2 = sectionBuilder.WithName("Cláusula 2 - Prazo")
+                                                 .WithContent("O prazo de vigência será de...")
+                                                 .IsEditable()
+                                                 .Build();
+                
+                clonedTemplate.Sections.Clear();                        
+                clonedTemplate.Sections.Add(section1);
+                clonedTemplate.Sections.Add(section2);
+                
+                return clonedTemplate;
+            }
+            
+            
             Console.WriteLine("Criando template de Contrato de Consultoria do zero...");
             
             System.Threading.Thread.Sleep(100);
@@ -86,7 +146,7 @@ namespace PrototypeDesignChallenge
             // Código quase idêntico ao CreateServiceContract
             var template = new DocumentTemplate
             {
-                Title = "Contrato de Consultoria",
+                Title = title,
                 Category = "Contratos",
                 Style = new DocumentStyle
                 {
@@ -155,19 +215,19 @@ namespace PrototypeDesignChallenge
             // Cada um é criado do zero, mesmo sendo idênticos no início
             Console.WriteLine("Criando 5 contratos de serviço...");
             var startTime = DateTime.Now;
-            
+            var contract = service.CreateServiceContract();
             for (int i = 1; i <= 5; i++)
             {
-                var contract = service.CreateServiceContract();
+                var newContract = (DocumentTemplate)contract.Clone();
                 // Depois modificamos apenas dados específicos do cliente
-                contract.Title = $"Contrato #{i} - Cliente {i}";
+                newContract.Title = $"Contrato #{i} - Cliente {i}";
             }
             
             var elapsed = (DateTime.Now - startTime).TotalMilliseconds;
             Console.WriteLine($"Tempo total: {elapsed}ms\n");
 
             // Problema: Código duplicado para templates similares
-            var consultingContract = service.CreateConsultingContract();
+            var consultingContract = service.CreateConsultingContract(contract);
             service.DisplayTemplate(consultingContract);
 
             // Perguntas para reflexão:
