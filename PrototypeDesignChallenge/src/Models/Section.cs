@@ -2,7 +2,7 @@ using PrototypeDesignChallenge.Models.Interfaces;
 
 namespace PrototypeDesignChallenge.Models;
 
-public class Section : IPrototype
+public class Section : IPrototype<Section>
 {
     public string Name { get; set; }
     public string Content { get; set; }
@@ -14,7 +14,7 @@ public class Section : IPrototype
         Placeholders = new List<string>();
     }
 
-    public IPrototype Clone()
+    public Section Clone()
     {
         return new Section
         {

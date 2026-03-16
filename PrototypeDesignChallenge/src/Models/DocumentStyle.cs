@@ -2,7 +2,7 @@ using PrototypeDesignChallenge.Models.Interfaces;
 
 namespace PrototypeDesignChallenge.Models;
 
-public class DocumentStyle : IPrototype
+public class DocumentStyle : IPrototype<DocumentStyle>
 {
     public string FontFamily { get; set; }
     public int FontSize { get; set; }
@@ -10,7 +10,7 @@ public class DocumentStyle : IPrototype
     public string LogoUrl { get; set; }
     public Margins PageMargins { get; set; }
     
-    public IPrototype Clone()
+    public DocumentStyle Clone()
     {
         return new DocumentStyle
         {

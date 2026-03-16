@@ -1,6 +1,6 @@
 namespace PrototypeDesignChallenge.Models.Interfaces;
 
-public interface IPrototype
+public interface IPrototype<T>
 {
-    IPrototype Clone();
+    T Clone();
 }
