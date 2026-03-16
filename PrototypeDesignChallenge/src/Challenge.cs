@@ -78,68 +78,6 @@ namespace PrototypeDesignChallenge
             return template;
         }
 
-        // Problema: Mesmo código repetido para criar documentos similares
-        public DocumentTemplate CreateConsultingContract(DocumentTemplate? documentTemplate = null)
-        {
-            string title = "Contrato de Consultoria";
-            
-            var sectionDirector = new SectionDirector();
-            var sections = sectionDirector.BuildSectionsForConsultingContract();
-
-            if (documentTemplate is not null)
-            {
-                DocumentTemplate clonedTemplate = documentTemplate.Clone();
-                clonedTemplate.Title = title;
-
-                clonedTemplate.Sections.Clear();
-                clonedTemplate.Sections.AddRange(sections);
-
-                return clonedTemplate;
-            }
-
-
-            Console.WriteLine("Criando template de Contrato de Consultoria do zero...");
-
-            System.Threading.Thread.Sleep(100);
-
-            // Código quase idêntico ao CreateServiceContract
-            var template = new DocumentTemplate
-            {
-                Title = title,
-                Category = "Contratos",
-                Style = new DocumentStyle
-                {
-                    FontFamily = "Arial",
-                    FontSize = 12,
-                    HeaderColor = "#003366",
-                    LogoUrl = "https://company.com/logo.png",
-                    PageMargins = new Margins { Top = 2, Bottom = 2, Left = 3, Right = 3 }
-                },
-                Workflow = new ApprovalWorkflow
-                {
-                    RequiredApprovals = 2,
-                    TimeoutDays = 5
-                }
-            };
-
-            template.Workflow.Approvers.Add("gerente@empresa.com");
-            template.Workflow.Approvers.Add("juridico@empresa.com");
-
-            template.Sections.AddRange(sections);
-
-            template.RequiredFields.Add("NomeCliente");
-            template.RequiredFields.Add("CPF");
-            template.RequiredFields.Add("Endereco");
-
-            template.Tags.Add("contrato");
-            template.Tags.Add("consultoria");
-
-            template.Metadata["Versao"] = "1.0";
-            template.Metadata["Departamento"] = "Comercial";
-
-            return template;
-        }
-
         public void DisplayTemplate(DocumentTemplate template)
         {
             Console.WriteLine($"\n=== {template.Title} ===");
@@ -174,7 +112,12 @@ namespace PrototypeDesignChallenge
             Console.WriteLine($"Tempo total: {elapsed}ms\n");
 
             // Problema: Código duplicado para templates similares
-            var consultingContract = service.CreateConsultingContract(contract);
+            var consultingContract = contract.Clone();
+            consultingContract.Title = "Contrato de Consultoria";
+            var sectionDirector = new SectionDirector();
+            var sectionsForConsultingContract = sectionDirector.BuildSectionsForConsultingContract();
+            consultingContract.Sections.Clear();
+            consultingContract.Sections.AddRange(sectionsForConsultingContract);
             service.DisplayTemplate(consultingContract);
 
             // Perguntas para reflexão:
