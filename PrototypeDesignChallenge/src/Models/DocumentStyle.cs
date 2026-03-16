@@ -18,7 +18,7 @@ public class DocumentStyle : IPrototype<DocumentStyle>
             FontSize = this.FontSize,
             HeaderColor = this.HeaderColor,
             LogoUrl = this.LogoUrl,
-            PageMargins = this.PageMargins
+            PageMargins = this.PageMargins.Clone()
         };
     }
 }

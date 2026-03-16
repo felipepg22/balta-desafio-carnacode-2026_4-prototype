@@ -25,7 +25,7 @@ namespace PrototypeDesignChallenge
 
             if (documentTemplate is not null)
             {
-                DocumentTemplate clonedTemplate = (DocumentTemplate)documentTemplate.Clone();
+                DocumentTemplate clonedTemplate = documentTemplate.Clone();
                 clonedTemplate.Title = title;
                 
                 clonedTemplate.Sections.Clear();

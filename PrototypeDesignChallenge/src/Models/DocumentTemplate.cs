@@ -20,19 +20,19 @@ public class DocumentTemplate : IPrototype<DocumentTemplate>
         Metadata = new Dictionary<string, string>();
         Tags = new List<string>();
     }
-    
+
     public DocumentTemplate Clone()
     {
         return new DocumentTemplate
         {
             Title = this.Title,
             Category = this.Category,
-            Sections = this.Sections,
-            Style = this.Style,
-            RequiredFields = this.RequiredFields,
-            Metadata = this.Metadata,
-            Workflow = this.Workflow,
-            Tags = this.Tags
+            Sections = this.Sections.Select(s => s.Clone()).ToList(),
+            Style = this.Style.Clone(),
+            RequiredFields = new List<string>(this.RequiredFields),
+            Metadata = new Dictionary<string, string>(this.Metadata),
+            Workflow = this.Workflow.Clone(),
+            Tags = new List<string>(this.Tags)
         };
     }
 }

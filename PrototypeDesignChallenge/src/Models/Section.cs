@@ -21,7 +21,7 @@ public class Section : IPrototype<Section>
             Name = this.Name,
             Content = this.Content,
             IsEditable = this.IsEditable,
-            Placeholders = this.Placeholders
+            Placeholders = new List<string>(this.Placeholders)
         };
     }
 }

@@ -17,8 +17,8 @@ public class ApprovalWorkflow : IPrototype<ApprovalWorkflow>
     {
         return new ApprovalWorkflow
         {
-            Approvers = this.Approvers,
-            RequiredApprovals =  this.RequiredApprovals,
+            Approvers = new List<string>(this.Approvers),
+            RequiredApprovals = this.RequiredApprovals,
             TimeoutDays = this.TimeoutDays
         };
     }

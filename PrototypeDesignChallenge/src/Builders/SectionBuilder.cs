@@ -4,7 +4,7 @@ namespace PrototypeDesignChallenge.Builders;
 
 public class SectionBuilder : ISectionBuilder
 {
-    private readonly Section _section = new Section();
+    private Section _section = new Section();
     
     public ISectionBuilder WithName(string name)
     {
@@ -32,6 +32,8 @@ public class SectionBuilder : ISectionBuilder
 
     public Section Build()
     {
-        return _section;
+        var built = _section;
+        _section = new Section();
+        return built;
     }
 }
