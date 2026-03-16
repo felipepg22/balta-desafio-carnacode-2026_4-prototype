@@ -2,7 +2,7 @@ using PrototypeDesignChallenge.Models.Interfaces;
 
 namespace PrototypeDesignChallenge.Models;
 
-public class ApprovalWorkflow : IPrototype
+public class ApprovalWorkflow : IPrototype<ApprovalWorkflow>
 {
     public List<string> Approvers { get; set; }
     public int RequiredApprovals { get; set; }
@@ -13,7 +13,7 @@ public class ApprovalWorkflow : IPrototype
         Approvers = new List<string>();
     }
 
-    public IPrototype Clone()
+    public ApprovalWorkflow Clone()
     {
         return new ApprovalWorkflow
         {

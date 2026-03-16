@@ -2,7 +2,7 @@ using PrototypeDesignChallenge.Models.Interfaces;
 
 namespace PrototypeDesignChallenge.Models;
 
-public class DocumentTemplate : IPrototype
+public class DocumentTemplate : IPrototype<DocumentTemplate>
 {
     public string Title { get; set; }
     public string Category { get; set; }
@@ -21,7 +21,7 @@ public class DocumentTemplate : IPrototype
         Tags = new List<string>();
     }
     
-    public IPrototype Clone()
+    public DocumentTemplate Clone()
     {
         return new DocumentTemplate
         {
