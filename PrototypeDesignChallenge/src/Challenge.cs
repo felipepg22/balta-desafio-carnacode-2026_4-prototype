@@ -10,7 +10,7 @@ namespace PrototypeDesignChallenge
 {
     // Contexto: Sistema que gerencia documentos corporativos com muitas configurações
     // Templates são complexos e custosos para criar, mas precisamos gerar muitos documentos similares
-    
+
 
     public class DocumentService
     {
@@ -19,41 +19,27 @@ namespace PrototypeDesignChallenge
         {
             string title = "Contrato de Prestação de Serviços";
             
+            var sectionDirector = new SectionDirector();
+                
+            var sections = sectionDirector.BuildSectionsForServiceContract();
+
             if (documentTemplate is not null)
             {
                 DocumentTemplate clonedTemplate = (DocumentTemplate)documentTemplate.Clone();
                 clonedTemplate.Title = title;
                 
-                SectionBuilder sectionBuilder = new SectionBuilder();
+                clonedTemplate.Sections.Clear();
                 
-                Section section1 = sectionBuilder.WithName("Cláusula 1 - Objeto")
-                                                 .WithContent("O presente contrato de consultoria tem por objeto...")
-                                                 .IsEditable()
-                                                 .Build();
-                
-                Section section2 = sectionBuilder.WithName("Cláusula 2 - Prazo")
-                                                 .WithContent("O prazo de vigência será de...")
-                                                 .IsEditable()
-                                                 .Build();
-                
-                Section section3 = sectionBuilder.WithName("Cláusula 3 - Valor")
-                                                 .WithContent("O valor total do contrato é de...")
-                                                 .IsEditable()
-                                                 .Build();
-                
-                clonedTemplate.Sections.Clear();                        
-                clonedTemplate.Sections.Add(section1);
-                clonedTemplate.Sections.Add(section2);
-                clonedTemplate.Sections.Add(section3);
-                
+                clonedTemplate.Sections.AddRange(sections);
+
                 return clonedTemplate;
             }
-            
+
             Console.WriteLine("Criando template de Contrato de Serviço do zero...");
-            
+
             // Simulando processo custoso de inicialização
             System.Threading.Thread.Sleep(100);
-            
+
             var template = new DocumentTemplate
             {
                 Title = title,
@@ -76,24 +62,7 @@ namespace PrototypeDesignChallenge
             template.Workflow.Approvers.Add("gerente@empresa.com");
             template.Workflow.Approvers.Add("juridico@empresa.com");
 
-            template.Sections.Add(new Section
-            {
-                Name = "Cláusula 1 - Objeto",
-                Content = "O presente contrato tem por objeto...",
-                IsEditable = true
-            });
-            template.Sections.Add(new Section
-            {
-                Name = "Cláusula 2 - Prazo",
-                Content = "O prazo de vigência será de...",
-                IsEditable = true
-            });
-            template.Sections.Add(new Section
-            {
-                Name = "Cláusula 3 - Valor",
-                Content = "O valor total do contrato é de...",
-                IsEditable = true
-            });
+            template.Sections.AddRange(sections);
 
             template.RequiredFields.Add("NomeCliente");
             template.RequiredFields.Add("CPF");
@@ -114,35 +83,25 @@ namespace PrototypeDesignChallenge
         {
             string title = "Contrato de Consultoria";
             
+            var sectionDirector = new SectionDirector();
+            var sections = sectionDirector.BuildSectionsForConsultingContract();
+
             if (documentTemplate is not null)
             {
                 DocumentTemplate clonedTemplate = (DocumentTemplate)documentTemplate.Clone();
                 clonedTemplate.Title = title;
-                
-                SectionBuilder sectionBuilder = new SectionBuilder();
-                
-                Section section1 = sectionBuilder.WithName("Cláusula 1 - Objeto")
-                                                 .WithContent("O presente contrato de consultoria tem por objeto...")
-                                                 .IsEditable()
-                                                 .Build();
-                
-                Section section2 = sectionBuilder.WithName("Cláusula 2 - Prazo")
-                                                 .WithContent("O prazo de vigência será de...")
-                                                 .IsEditable()
-                                                 .Build();
-                
-                clonedTemplate.Sections.Clear();                        
-                clonedTemplate.Sections.Add(section1);
-                clonedTemplate.Sections.Add(section2);
-                
+
+                clonedTemplate.Sections.Clear();
+                clonedTemplate.Sections.AddRange(sections);
+
                 return clonedTemplate;
             }
-            
-            
+
+
             Console.WriteLine("Criando template de Contrato de Consultoria do zero...");
-            
+
             System.Threading.Thread.Sleep(100);
-            
+
             // Código quase idêntico ao CreateServiceContract
             var template = new DocumentTemplate
             {
@@ -166,19 +125,7 @@ namespace PrototypeDesignChallenge
             template.Workflow.Approvers.Add("gerente@empresa.com");
             template.Workflow.Approvers.Add("juridico@empresa.com");
 
-            // Mesmas seções com pequenas variações
-            template.Sections.Add(new Section
-            {
-                Name = "Cláusula 1 - Objeto",
-                Content = "O presente contrato de consultoria tem por objeto...",
-                IsEditable = true
-            });
-            template.Sections.Add(new Section
-            {
-                Name = "Cláusula 2 - Prazo",
-                Content = "O prazo de vigência será de...",
-                IsEditable = true
-            });
+            template.Sections.AddRange(sections);
 
             template.RequiredFields.Add("NomeCliente");
             template.RequiredFields.Add("CPF");
@@ -222,7 +169,7 @@ namespace PrototypeDesignChallenge
                 // Depois modificamos apenas dados específicos do cliente
                 newContract.Title = $"Contrato #{i} - Cliente {i}";
             }
-            
+
             var elapsed = (DateTime.Now - startTime).TotalMilliseconds;
             Console.WriteLine($"Tempo total: {elapsed}ms\n");
 
